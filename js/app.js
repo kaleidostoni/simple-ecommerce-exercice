@@ -1,3 +1,6 @@
+//declarando el arreglo de productos seleccionados por el usuario 
+let cartArray = [];
+
 function drawProducts(data) {
   let products = data.products;
   let productsContainer = document.getElementById("products-container");
@@ -12,8 +15,8 @@ function createProductHTML(product) {
     <h3>${product.title}</h3>
     <img src='${product.imageUrl}' alt='${product.description}'/>
     <p>${product.description}</p>
-    <button data-product-id=${product.id}
-      onclick="addToCart(${product.id})"
+    <button id="${product.id}" data-product-id=${product.id}
+      onclick="changeButtonStatus(${product.id})"
       class='btn btn-primary'>
         Agregar a carrito
       </button>
@@ -27,13 +30,15 @@ function createProductHTML(product) {
 
 drawProducts(data);
 
-function addToCart() {
-  /* cuando agrego a carrito, tengo que:
-  1) Incrementar en uno mi contador del menu
-  2) Guardar mi producto en algun lugar
-  3) Cambiar el boton de agregar a carrito
-  por quitar del carrito
-  */
+function addToCart(id) {
+  //guardando el producto con el id seleccionado 
+let selectedProduct = data.products[id];
+//agregando el producto al array de productos seleccionados
+cartArray.push(selectedProduct);
+//guardando el array de productos en local storage
+localStorage.setItem('arrayToString',JSON.stringify(cartArray));
+//llamamos la función para aumentar el contador del carrito
+increaseCounter();
 }
 
 function removeFromCart() {
@@ -46,8 +51,17 @@ function removeFromCart() {
 }
 
 function increaseCounter() {
-  /* como accedemos al HTML del contador
-  y como lo incrementamos*/
+//llamamos al contenedor del contador 
+let counterContainer = document.getElementById('counter-items');
+//obtenemos el array guardado en local storage
+let storedData = localStorage.getItem('arrayToString');
+//regresando el string a array
+let stringToArray = (JSON.parse(storedData));
+//contando los productos del array
+let totalItems = stringToArray.length;
+//añadiendo cantidad de productos al contenedor
+counterContainer.innerText = totalItems;
+
 }
 
 function decreaseCounter() {
@@ -55,11 +69,6 @@ function decreaseCounter() {
   y como lo incrementamos*/
 }
 
-function changeButtonStatus(button) {
-  /* esta funcion deberia recibir un boton y
-  cambiar su estatus
-    Si el boton esta en agregar al carrito
-      cambia el texto a quitar del carrito
-    Y viceversa
-  */
+function changeButtonStatus(idButton) {
+let clickedBtn = document.getElementById(idButton);
 }
