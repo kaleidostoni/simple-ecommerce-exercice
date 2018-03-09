@@ -9,6 +9,8 @@ let fromStingToArray = JSON.parse(getLocalStorageString);
 function calculateTotal(array) {
 //declarando la variable que guardara la suma total de precios
   let totalSumOfProducts = 0;
+//decalarando la variable del template 
+let template = ' ';
   //iterando en el arreglo 
   let products = array;
 array.forEach(product => {
@@ -19,6 +21,19 @@ array.forEach(product => {
  console.log(productPrice);
  //haciendo la suma de precios a pagar y guardandola en la suma total
  totalSumOfProducts += productPrice
+ console.log(totalSumOfProducts);
+
+ //colocando la información de productos en template
+ template = `
+ <th scope="row">${productName}</th>
+ <td>${productPrice}<td>
+ `
+ //creando row para la tabla (para colocar el template)
+ let tableRow = document.createElement('tr');
+ tableRow.innerHTML=template;
+ //llamando el contenedor de la tabla
+ let tableContainer = document.getElementById('table-body');
+
 
 })
   
