@@ -72,21 +72,26 @@ function decreaseCounter() {
 }
 
 function changeButtonStatus(idButton) {
+  console.log(idButton)
 //llamando al botón que fue clickado mediante su id
 let clickedBtn = document.getElementById(idButton);
+console.log(clickedBtn);
 //haciendo comparación del texto del boton seleccionado
-if (clickedBtn.innerText === 'Agregar al carrito'){
+if (clickedBtn.innerText === 'Agregar a carrito'){
  //si el texto es agregar... cambiar el texto quitar...
  //y llamar la funcion addToCart
+ //console.log('dice agregar')
+ addToCart(clickedBtn.id);
   clickedBtn.innerText = 'Quitar del carrito';
-  addToCart(clickedBtn.id);
-console.log(clickedBtn.id );
+ 
+//console.log(clickedBtn.id );
 }else{
-  console.log('hola')
+ // console.log('dice quitar')
 //de otra forma añadir el texto agregar... y llamar 
 //la función remove from cart
-clickedBtn.innerText = 'Agregar al carrito';
 removeFromCart(clickedBtn.id);
+clickedBtn.innerText = 'Agregar a carrito';
+
 }
 
 }
