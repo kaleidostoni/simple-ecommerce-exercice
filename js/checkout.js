@@ -16,12 +16,12 @@ function calculateTotal(array) {
   array.forEach(product => {
     //guardando la el nombre y precio de los productos en el carrito
     let productName = product.title;
-    console.log(productName);
+   // console.log(productName);
     let productPrice = product.price;
-    console.log(productPrice);
+   // console.log(productPrice);
     //haciendo la suma de precios a pagar y guardandola en la suma total
     totalSumOfProducts += productPrice
-    console.log(totalSumOfProducts);
+    //console.log(totalSumOfProducts);
 
     //colocando la información de productos en template
     template = `
@@ -40,6 +40,43 @@ function calculateTotal(array) {
   let totalPrice = document.getElementById('total-container');
   totalPrice.innerHTML = totalSumOfProducts;
 
-
 }
 calculateTotal(fromStingToArray);
+
+let totalPrice = document.getElementById('total-container');
+console.log(totalPrice);
+let priceText = totalPrice.innerText;
+console.log(priceText);
+
+paypal.Button.render({
+  env: 'sandbox', // sandbox | production
+  // PayPal Client IDs - replace with your own
+  // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+  client: {
+      sandbox:    'AaJEPDYgciiG2Vk-G_6NvNJfUCKrCODxyZqAJabhXhi9VVGDPa3Z3-f7j79O90cX2T9_ZJ_liTxavThs',
+      production: '<insert production client id>'
+  },
+  // Show the buyer a 'Pay Now' button in the checkout flow
+  commit: true,
+  // payment() is called when the button is clicked
+  payment: function(data, actions) {
+      // Make a call to the REST api to create the payment
+      return actions.payment.create({
+          payment: {
+              transactions: [
+                  {
+                    
+                      amount: { total: priceText, currency: 'USD' }
+                  }
+              ]
+          }
+      });
+  },
+   // onAuthorize() is called when the buyer approves the payment
+   onAuthorize: function(data, actions) {
+      // Make a call to the REST api to execute the payment
+      return actions.payment.execute().then(function() {
+          window.alert('Payment Complete!');
+      });
+  }
+}, '#paypal-button-container');
