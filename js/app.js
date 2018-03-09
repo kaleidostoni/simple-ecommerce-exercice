@@ -35,6 +35,7 @@ function addToCart(id) {
 let selectedProduct = data.products[id];
 //agregando el producto al array de productos seleccionados
 cartArray.push(selectedProduct);
+//console.log(cartArray);
 //guardando el array de productos en local storage
 localStorage.setItem('arrayToString',JSON.stringify(cartArray));
 //llamamos la función para aumentar el contador del carrito
@@ -59,6 +60,7 @@ let storedData = localStorage.getItem('arrayToString');
 let stringToArray = (JSON.parse(storedData));
 //contando los productos del array
 let totalItems = stringToArray.length;
+console.log(totalItems);
 //añadiendo cantidad de productos al contenedor
 counterContainer.innerText = totalItems;
 
@@ -70,5 +72,19 @@ function decreaseCounter() {
 }
 
 function changeButtonStatus(idButton) {
+//llamando al botón que fue clickado mediante su id
 let clickedBtn = document.getElementById(idButton);
+//haciendo comparación del texto del boton seleccionado
+if (clickedBtn.innerText === 'Agregar a carrito'){
+ //si el texto es agregar... cambiar el texto quitar...
+ //y llamar la funcion addToCart
+  clickedBtn.innerText = 'Quitar del carrito';
+  addToCart(clickedBtn.id);
+}else{
+//de otra forma añadir el texto agregar... y llamar 
+//la función remove from cart
+clickedBtn.innerText = 'Agregar al carrito';
+removeFromCart(clickedBtn.id);
+}
+
 }
