@@ -31,11 +31,15 @@ array.forEach(product => {
  //creando row para la tabla (para colocar el template)
  let tableRow = document.createElement('tr');
  tableRow.innerHTML=template;
- //llamando el contenedor de la tabla
+ //llamando el contenedor de la tabla de productos y la fila del total total
  let tableContainer = document.getElementById('table-body');
+let totalRow = document.getElementById('total-row');
+//agregando template de productos antes del precio total
+tableContainer.insertBefore(tableRow,totalRow);
+});//llamando el contenedor del precio total
+let totalPrice = document.getElementById('total-container');
+totalPrice.innerHTML =totalSumOfProducts;
 
-
-})
   
 }
  calculateTotal(fromStingToArray);
